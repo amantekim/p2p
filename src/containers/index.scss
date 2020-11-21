@@ -1,0 +1,22 @@
+.main-container{
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  grid-template-rows: 1fr;
+  height: 100vh;
+  width: 100vw;
+  background-color: #f2f3f4;
+  position: relative;
+  & > .form-region {
+    grid-column: 1/2;
+    background-color: #ffffff;
+    & > h3 {
+      display: flex;
+      justify-content: center;
+    }
+  }
+  & > .map-region {
+    display: flex;
+    align-items: center;
+    grid-column: 2/2
+  }
+}

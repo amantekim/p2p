@@ -1,0 +1,12 @@
+
+.form-input {
+  margin: 16px;
+  & > input {
+    width: 100%;
+    line-height: 1.618;
+    padding: 16px 24px;
+    border-radius: 4px;
+    outline: 0;
+    border-color:  #ffa726;;
+  }
+}
