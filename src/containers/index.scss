@@ -12,7 +12,10 @@
       display: flex;
       justify-content: center;
     }
-  }
-  & > .map-region {
+    & > .form-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 16px;
+    }
   }
 }
