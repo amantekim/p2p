@@ -5,7 +5,7 @@ import FormInput from "components/input-field";
 import GoogleMapComponent from "components/map";
 import Button from "components/button";
 import { getUrl } from "constants/constants";
-import { fetchToken } from "store/store"
+import { fetchToken } from "store/actions"
 import "./index.scss";
 class MainPage extends React.Component {
   constructor(props) {
@@ -56,6 +56,9 @@ class MainPage extends React.Component {
       errorMessage 
     } = this.state;
 
+    const { state } = this.props
+
+    console.log("props", state)
     return (
       <div className="main-container">
         <div className="form-region">

@@ -1,55 +1,19 @@
 
+import {
+  FETCH_TOKEN,
+  SET_LOADING,
+  SET_RESPONSE_MESSAGE,
+  SET_COORDINATES,
+} from "./actions";
 
-
-const FETCH_TOKEN  = "FETCH_TOKEN"
-const FETCH_TOKEN_SUCCESS  = "FETCH_TOKEN_SUCCESS"
-const FETCH_TOKEN_FAILED  = "FETCH_TOKEN_FAILED"
-
-const FETCH_ROUTE  = "FETCH_ROUTE"
-const FETCH_ROUTE_SUCCESS  = "FETCH_ROUTE_SUCCESS"
-const FETCH_ROUTE_FAILED  = "FETCH_ROUTE_FAILED"
-
-
-//actions
-export const fetchToken = (data) => {
-  return {
-    types: [
-      FETCH_TOKEN,
-      FETCH_TOKEN_SUCCESS,
-      FETCH_TOKEN_FAILED,
-    ],
-    payload: {
-      request: {
-        method: "POST",
-        url: `/route`,
-        data,
-      },
-    },
-  };
-};
-
-export const fetchRoute = (token) => {
-  return {
-    types: [
-      FETCH_ROUTE,
-      FETCH_ROUTE_SUCCESS,
-      FETCH_ROUTE_FAILED,
-    ],
-    payload: {
-      request: {
-        method: "GET",
-        url: `/route/${token}`
-      },
-    },
-  };
-};
-
-
-//reducer
 const initialState = {
   isLoading: false,
-  coordinates: {},
-  errors: {},
+  data: {
+    total_distance: "",
+    total_time: "",
+    paths: []
+  },
+  responseMessage: "",
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -58,16 +22,31 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: true,
+        data: {},
+        responseMessage: {}
+      };
+    
+    case SET_LOADING:
+      return {
+        ...state,
+        isLoading: action?.payload,
+      };
+    
+    case SET_COORDINATES:
+      console.log("actionpayload------ coor", action.payload)
+      return {
+        ...state,
+        data: {
+          ...action.payload,
+        }
+      };
+    case SET_RESPONSE_MESSAGE:
+      console.log("actionpayload------ message", action.payload)
+      return {
+        ...state,
+        responseMessage: ""
       };
 
-    // case FETCH_TOKEN_SUCCESS:
-    //   const { data } = action.payload
-    //   console.log("path_coords", data)
-    //   return {
-    //     ...state,
-    //     isLoading: false,
-    //     coordinates: {},
-    //   };
     default:
       return state;
   }
