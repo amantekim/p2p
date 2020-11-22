@@ -6,11 +6,4 @@ const axiosInstance = axios.create({
   baseURL: baseUrl,
 });
 
-const requestInterceptor = (config) => {
-  config.headers["Content-type"] = "application/json";
-  return config;
-};
-
-axiosInstance.interceptors.request.use(requestInterceptor);
-
 export default axiosInstance;

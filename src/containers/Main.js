@@ -34,21 +34,27 @@ class MainPage extends React.Component {
     })
   }
 
-  fetchRoute = () => {
+  fetchRoute = (e) => {
+    e.preventDefault();
+
     const {
       origin,
       destination
     } = this.state
 
-    const data = {
-      origin, 
-      destination
-    }
-    this.props.fetchToken(data)
+    const reqData = JSON.stringify({
+      "origin": origin, 
+      "destination": destination
+    })
+    this.props.fetchToken(reqData)
   }
 
   render() {
-    const { origin, destination, errorMessage } = this.state;
+    const { 
+      origin, 
+      destination, 
+      errorMessage 
+    } = this.state;
 
     return (
       <div className="main-container">
