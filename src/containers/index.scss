@@ -5,7 +5,6 @@
   height: 100vh;
   width: 100vw;
   background-color: #f2f3f4;
-  position: relative;
   & > .form-region {
     grid-column: 1/2;
     background-color: #ffffff;
@@ -15,8 +14,5 @@
     }
   }
   & > .map-region {
-    display: flex;
-    align-items: center;
-    grid-column: 2/2
   }
 }
