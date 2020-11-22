@@ -1,15 +1,17 @@
 import React from "react";
-import "./index.scss"
+import cx from "classnames";
+import "./index.scss";
 
-const Button = ({ buttonName, onClick, customStyle }) => {
+const Button = ({ buttonName, onClick, customStyle, disabled }) => {
   return (
     <button
       type="button"
-      className="button"
+      className={cx("button", disabled && 'disabled')}
       onClick={onClick}
       style={customStyle}
+      disabled={disabled}
     >
-      <span> {buttonName} </span>
+      <span className={cx(disabled && 'disabled')}> {buttonName} </span>
     </button>
   );
 };

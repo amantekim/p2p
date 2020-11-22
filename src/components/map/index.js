@@ -21,6 +21,7 @@ const GoogleMapComponent = withScriptjs(
       <GoogleMap
         defaultZoom={11}
         defaultCenter={{ lat: 14.5995, lng: 120.9842 }}
+        center={startingPoint ? startingPoint : { lat: 14.5995, lng: 120.9842 }}
       >
         {pathCoordinates.length > 0 && (
           <>

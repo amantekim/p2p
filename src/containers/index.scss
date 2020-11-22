@@ -14,13 +14,23 @@
     }
     & > .form-row {
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       padding: 16px;
     }
     & > .form-group {
       display: flex;
       flex-direction: column;
-      padding: 0px 32px;
+      padding: 0px 40px;
+    }
+    & > .form-group > .info {
+      display: flex;
+      justify-content: space-between;
+    }
+    & > .form-group > .info > p {
+      margin: 4px 0px;
+    }
+    & > .form-group > .info > .result {
+      font-weight: 600;
     }
   }
 }

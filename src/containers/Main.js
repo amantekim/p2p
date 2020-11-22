@@ -1,11 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators, compose } from "redux";
+
 import FormInput from "components/input-field";
 import GoogleMapComponent from "components/map";
 import Button from "components/button";
+import ContentLoader from "components/loader"
+import RouteDetails from "components/route-details"
+
 import { getUrl } from "constants/constants";
-import { fetchToken } from "store/actions";
+import { fetchToken, resetForm } from "store/actions";
 import "./index.scss";
 class MainPage extends React.Component {
   constructor(props) {
@@ -14,6 +18,10 @@ class MainPage extends React.Component {
       origin: "",
       destination: "",
     };
+  }
+
+  componentDidMount() {
+    this.props.resetForm();
   }
 
   handleChange = (e) => {
@@ -26,6 +34,7 @@ class MainPage extends React.Component {
 
   handleReset = (e) => {
     e.preventDefault();
+    this.props.resetForm();
     this.setState({
       origin: "",
       destination: "",
@@ -48,7 +57,7 @@ class MainPage extends React.Component {
     const { origin, destination } = this.state;
 
     const {
-      state: { data, responseMessage },
+      state: { data, responseMessage, isLoading },
     } = this.props;
 
     let originToDestination = data.paths || []
@@ -76,8 +85,9 @@ class MainPage extends React.Component {
           <div className="form-row">
             <Button
               customStyle={{ marginRight: "4px" }}
-              buttonName="Submit"
+              buttonName={data.total_distance && data.total_time ? "Re-submit" : "Submit"} 
               onClick={this.fetchRoute}
+              disabled={isLoading}
             />
             <Button
               customStyle={{
@@ -88,8 +98,10 @@ class MainPage extends React.Component {
               }}
               buttonName="Reset"
               onClick={this.handleReset}
+              disabled={isLoading}
             />
           </div>
+          <ContentLoader loading={isLoading} />
           {responseMessage && (
             <div className="form-row">
               <p>{responseMessage}</p>
@@ -98,19 +110,12 @@ class MainPage extends React.Component {
 
           {data.total_distance && data.total_time && (
             (
-              <div className="form-group">
-                <div className="form-row">
-                  <p>Total Distance</p>
-                  <p>{data?.total_distance || ""}</p>
-                </div>
-                <div className="form-row">
-                  <p>Total Time</p>
-                  <p>{data?.total_time || ""}</p>
-                </div>
-              </div>
+             <RouteDetails total_distance={data?.total_distance} total_time={data?.total_time}/>
             )
           )}
+          
         </div>
+
         <div className="map-region">
           <GoogleMapComponent
             googleMapURL={getUrl()}
@@ -132,6 +137,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ fetchToken }, dispatch);
+  bindActionCreators({ fetchToken, resetForm }, dispatch);
 
 export default compose(connect(mapStateToProps, mapDispatchToProps))(MainPage);

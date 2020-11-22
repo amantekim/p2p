@@ -5,6 +5,7 @@ import store from "./store"
 import 'styles/global.scss';
 import reportWebVitals from './reportWebVitals';
 import Routes from './routes'
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 
 ReactDOM.render(
     <Provider store={store}>
