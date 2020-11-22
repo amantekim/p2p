@@ -7,11 +7,9 @@ import reportWebVitals from './reportWebVitals';
 import Routes from './routes'
 
 ReactDOM.render(
-  <React.StrictMode>
     <Provider store={store}>
       <Routes />
-    </Provider>
-  </React.StrictMode>,
+    </Provider>,
   document.getElementById('root')
 );
 

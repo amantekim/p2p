@@ -4,6 +4,8 @@ import {
   SET_LOADING,
   SET_RESPONSE_MESSAGE,
   SET_COORDINATES,
+  SET_TOKEN,
+  RESET_FORM
 } from "./actions";
 
 const initialState = {
@@ -14,6 +16,7 @@ const initialState = {
     paths: []
   },
   responseMessage: "",
+  token: ""
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -22,8 +25,12 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: true,
-        data: {},
-        responseMessage: {}
+        data: {
+          total_distance: "",
+          total_time: "",
+          paths: []
+        },
+        responseMessage: ""
       };
     
     case SET_LOADING:
@@ -33,7 +40,6 @@ const rootReducer = (state = initialState, action) => {
       };
     
     case SET_COORDINATES:
-      console.log("actionpayload------ coor", action.payload)
       return {
         ...state,
         data: {
@@ -41,9 +47,24 @@ const rootReducer = (state = initialState, action) => {
         }
       };
     case SET_RESPONSE_MESSAGE:
-      console.log("actionpayload------ message", action.payload)
       return {
         ...state,
+        responseMessage: action.payload
+      };
+
+    case SET_TOKEN:
+      return {
+        ...state,
+        token: action.payload
+      };
+    case RESET_FORM:
+      return {
+        ...state,
+        data: {
+          total_distance: "",
+          total_time: "",
+          paths: []
+        },
         responseMessage: ""
       };
 

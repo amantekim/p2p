@@ -10,8 +10,10 @@ export const FETCH_ROUTE_SUCCESS  = "FETCH_ROUTE_SUCCESS"
 export const FETCH_ROUTE_FAILED  = "FETCH_ROUTE_FAILED"
 
 export const SET_LOADING = "SET_LOADING"
+export const SET_TOKEN = "SET_TOKEN"
 export const SET_COORDINATES = "SET_COORDINATES"
 export const SET_RESPONSE_MESSAGE = "SET_RESPONSE_MESSAGE"
+export const RESET_FORM = "RESET_FORM"
 
 //actions
 export const fetchToken = (data) => {
@@ -68,4 +70,19 @@ export const setResponseMessage = (payload) => {
     payload
   };
 };
+
+export const setToken = (payload) => {
+  return {
+    type: SET_TOKEN,
+    payload
+  };
+};
+
+export const resetForm = (payload) => {
+  return {
+    type: RESET_FORM,
+    payload
+  };
+};
+
 

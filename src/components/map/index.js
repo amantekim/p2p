@@ -4,53 +4,39 @@ import {
   GoogleMap,
   withScriptjs,
   Marker,
-  Polyline
+  Polyline,
 } from "react-google-maps";
 
 const GoogleMapComponent = withScriptjs(
   withGoogleMap((props) => {
-    const { 
+    const {
       startingPoint,
       startingPointClick,
       dropOff,
       dropOffClick,
+      pathCoordinates,
     } = props;
-
-    const pathCoordinates = [
-      { lat: 14.5764, lng: 121.0851 },
-     {lat: 14.6255, lng: 121.1245}
-  ];
+    
     return (
       <GoogleMap
         defaultZoom={11}
-        defaultCenter={{ lat: 14.5764, lng: 121.0851 }}
+        defaultCenter={{ lat: 14.5995, lng: 120.9842 }}
       >
-        {startingPoint && (
-          <Marker
-            position={{ lat: 14.5764, lng: 121.0851 }}
-            onClick={startingPointClick}
-          />
+        {pathCoordinates.length > 0 && (
+          <>
+            <Marker position={startingPoint} onClick={startingPointClick} />
+            <Marker position={dropOff} onClick={dropOffClick} />
+            <Polyline
+              path={pathCoordinates}
+              geodesic={true}
+              options={{
+                strokeColor: "#F16623",
+                strokeOpacity: 0.75,
+                strokeWeight: 2,
+              }}
+            />
+          </>
         )}
-
-        {dropOff && (
-          <Marker
-            position={{ lat: 14.6255, lng: 121.1245 }}
-            onClick={dropOffClick}
-          />
-        )}
-
-        {startingPoint && dropOff && 
-          <Polyline
-            path={pathCoordinates}
-            geodesic={true}
-                options={{
-                    strokeColor: "#F16623",
-                    strokeOpacity: 0.75,
-                    strokeWeight: 2,
-                }}
-          />
-        }
-
       </GoogleMap>
     );
   })

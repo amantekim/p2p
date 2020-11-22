@@ -1,4 +1,4 @@
-import { all, put } from "redux-saga/effects";
+import { all, put, select } from "redux-saga/effects";
 import { takeLatest } from "redux-saga/effects";
 
 import {
@@ -11,6 +11,7 @@ import {
   toggleLoading,
   setCoordinatesDetails,
   setResponseMessage,
+  setToken,
 } from "./actions";
 
 function* watchFetchTokenSuccess() {
@@ -18,6 +19,7 @@ function* watchFetchTokenSuccess() {
     FETCH_TOKEN_SUCCESS,
     function* handleFetchToken({ payload }) {
       const { data } = payload;
+      yield put(setToken(data.token))
       yield put(fetchRoute(data.token));
     }
   );
@@ -54,23 +56,25 @@ function* watchFetchRouteSuccess() {
           error = {},
         },
       } = payload || {};
+      let token = yield select((state) => state.token);
 
-      yield put(toggleLoading(false));
       if (status === "success") {
         let coordinates = path.map((loc) => {
           return { lat: parseFloat(loc[0]), lng: parseFloat(loc[1]) };
         });
 
         const data = {
-          path: coordinates,
+          paths: coordinates,
           total_distance: total_distance,
           total_time: total_time,
         };
+        yield put(toggleLoading(false));
         yield put(setCoordinatesDetails(data));
       } else if (status === "failure") {
+        yield put(toggleLoading(false));
         yield put(setResponseMessage(error));
       } else {
-
+        yield put(fetchRoute(token))
       }
     }
   );
@@ -79,17 +83,9 @@ function* watchFetchRouteSuccess() {
 function* watchFetchRouteFailed() {
   yield takeLatest(
     FETCH_ROUTE_FAILED,
-    function* handleFetchRouteSuccess(response) {
-      const {
-        meta: {
-          previousAction: {
-            payload: {
-              request: { data },
-            },
-          },
-        },
-      } = response;
-      yield put(fetchRoute(data));
+    function* handleFetchRouteFailed() {
+      let token = yield select((state) => state.token);
+      yield put(fetchRoute(token));
     }
   );
 }
